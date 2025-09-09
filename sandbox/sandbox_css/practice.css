@@ -1,40 +1,99 @@
 
-
+/* The next lines override the browser's margin and padding defaults */
 * {
-    border: 1px solid red;
+  box-sizing: boarder-box;
+  margin: 0;
+  padding: 0;
     }
-header {
 
+body {
+    /* 
+    Front stack explanation:width:
+    - system-ui: Uses the OS default UI font (Segoe UI on Windows, San Francisco on Mac)
+    - apple-system: Fallback for older Safari browsers
+    - sans-serif: Universal fallback if system fonts fail
+     */
+     font-family: system-ui, -apple-system, sans-serif;
+
+     /* Line height 1.6 = 160% of font size - improves readability */
+     line-height: 1.6;
+
+     /* #333 is dark gray - softer than pure black for better reading experience */
+     color: #333;
+}
+
+nav {
+    background-color: #fff;
+    padding: 1rem 2 rem;
+    border-bottom: 1px solid #e9ecef;
+}
+
+header {
+/* 
     display: flex;
     flex-direction: row;
     gap: 2rem;
     height: 70vh;
-    background-color:bisque;
+    background-color: bisque; */
+
+    display: flex;
+    align-items: center;
+    padding: 2rem;
+    gap: 2rem;
+    height: 60vh;
+    background-color: #f8f9fa;
 
 }
 
-.header_card {
+.header_text {
 
     background-color:cadetblue;
-    height: 50vh;
-    width: 45%
-
-
+    flex: 1;
+    padding: 2rem;
 }
+
 
 .header_pic {
-    background-color:cadetblue;
-    height: 50vh;
-    width: 45%
 
+    flex: 1;
+    /* Takes up equal space */
+    background-color: #e9ecef;
+    min-height: 300px;
+    border-radius: 8px;
+    /* Subtle rounded corners */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6c757d;
 }
-    
+
+main {
+    max-width: 65ch; 
+    margin: 0 auto;
+    padding: 5%
+}
+
+section {
+    margin-bottom: 2rem;
+}
+
+/* Consistent spacing between paragraphs */
+p + p {
+    margin-top: 1rem;
+}
+
+
 h1 {
-        color: #4d1979;
-        background-color:azure;
+    color: #4d1979;
+    font-size: 2.5 rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+    /* START HERE */
 }
+
 
 h2 {
-        color: #4d1979;
-        background-color:aquamarine;
+    color: #4d1979;
+    background-color:rgb(42, 177, 177);
 }
