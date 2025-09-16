@@ -83,11 +83,52 @@ header {
     color: #6c757d;
 }
 
+/* ADDED: Professional headshot styling with size constraints  */
+.header_pic img {
+  width: 100%;
+  height: 100%;
+  max-width:400px;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+
+
 main {
     max-width: 65ch; 
     margin: 0 auto;
     padding: 5%
 }
+
+.about-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding: 3rem 0;
+  align-items: center;
+}
+.about-image {
+  flex: 1;
+  min-width: 250px;
+  text-align: center;
+}
+
+.about-image img {
+  width: 100%
+  max-width: 250px;
+  height: auto;
+  border-raduis: 8px;
+}
+
+
+.about-text {
+  flex: 2;
+  min-width: 250px;}
+
+
+
+
 
 section {
     margin-bottom: 2rem;
