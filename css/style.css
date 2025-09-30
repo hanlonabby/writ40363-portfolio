@@ -1,23 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&family=Zalando+Sans+Expanded:ital,wght@0,200..900;1,200..900&display=swap');
 
-/* ====== Color System (Blues) ====== */
 :root{
-  /* Core text */
-  --text-color:#0f172a;         /* slate-900 */
-  --light-text:#475569;         /* slate-600 */
+  /* core text */
+  --text-color:#0f172a;       
+  --light-text:#475569;     
 
-  /* Brand blues */
-  --navy:#0b1f3a;               /* deep navy for nav */
-  --indigo:#1c336a;             /* headings */
-  --accent:#3b82f6;             /* links/accents */
+  /* blues chosen */
+  --navy:#0b1f3a;       
+  --indigo:#1c336a;            
+  --accent:#3b82f6;             
   --accent-hover:#2563eb;
 
-  /* Background blues */
-  --page-bg:#f5f8ff;            /* page background (very light blue) */
-  --section-bg:#eaf2ff;         /* light blue for header/about */
-  --alt-section-bg:#f1f5ff;     /* alternate very light blue */
+  /* background blues */
+  --page-bg:#f5f8ff;            
+  --section-bg:#eaf2ff;         
+  --alt-section-bg:#f1f5ff;     
 
-  /* Cards & borders */
+/* cards and boarders */
   --card-bg:#ffffff;
   --card-border:#d6e3ff;
   --card-shadow:0 2px 4px rgba(0,0,0,0.08);
@@ -29,7 +28,6 @@
   --nav-text-muted:#e2e8f0;
 }
 
-/* ====== Resets ====== */
 *{box-sizing:border-box;margin:0;padding:0;}
 
 body{
@@ -39,7 +37,7 @@ body{
   background:var(--page-bg);
 }
 
-/* ====== Nav (Navy w/ white text) ====== */
+/* nav navy with white text */
 nav{
   background:var(--nav-bg);
   padding:1rem 2rem;
@@ -50,7 +48,7 @@ nav{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:0; /* remove white card bar */
+  padding:0;
 }
 
 .logo{
@@ -77,15 +75,13 @@ nav a:focus{
   outline-offset:2px;
 }
 
-/* ====== Header (light blue background) ====== */
-header{
-  display:flex;
-  align-items:center;
-  gap:2rem;
-  padding:2rem;
-  height:60vh;
-  background:var(--section-bg);
-  border-bottom:1px solid var(--card-border);
+/* header in light blue background */
+header {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 3rem 0;
+  flex-wrap: wrap;
 }
 
 .header_text{flex:1;padding:2rem;}
@@ -97,13 +93,23 @@ header{
   display:flex;align-items:center;justify-content:center;
   color:var(--light-text);
 }
-.header_pic img{
-  width:100%;height:100%;
-  max-width:400px;max-height:400px;
-  object-fit:cover;border-radius:10px;
+.header_pic img {
+  width: 100%;
+  height: auto;              
+  max-width: 400px;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 10px;
+  display: block;    
+  margin: 0 auto;           
 }
 
-/* ====== Main ====== */
+@media (max-width:768px)
+
+{ 
+  header {flex-direction:column;}
+}
+/* Main section */
 main{
   display:grid;
   gap:4rem;
@@ -113,7 +119,7 @@ main{
 }
 @media (min-width:768px){ main{ padding:1.5rem; } }
 
-/* ====== Sections (alternate soft blues) ====== */
+/* blue sections */
 section{ padding:3rem 0; }
 #about{ background:var(--section-bg); }
 #skills{ background:var(--alt-section-bg); }
@@ -122,7 +128,7 @@ section{ padding:3rem 0; }
 
 p + p{ margin-top:1rem; }
 
-/* ====== Type ====== */
+/* type and font */
 h1,h2,h3{ font-family:'Zalando', sans-serif; line-height:1.2; }
 h1{
   font-size:2.5rem;font-weight:700;
@@ -135,12 +141,12 @@ h2{
 }
 h3{
   font-size:1.5rem;font-weight:600;
-  color:#243b6b; /* readable blue-gray */
+  color:#243b6b; 
   margin-bottom:.6rem;line-height:1.4;
 }
 p{ font-size:1rem;margin-bottom:1rem;color:#1f2a44; }
 
-/* Section headings embellisher (blue) */
+/* sections header in dark blue */
 section h2{
   text-align:center;
   font-size:2rem;
@@ -153,7 +159,7 @@ section h2::after{
   margin:1rem auto 0;border-radius:2px;
 }
 
-/* ====== Skills ====== */
+/* skills */
 .skills-container{
   display:grid;
   grid-template-columns:1fr;
@@ -176,7 +182,7 @@ section h2::after{
 }
 .skill-card h3{ color:#1e315d;margin-bottom:.5rem; }
 
-/* ====== Projects ====== */
+/* projects */
 .projects-container{
   display:grid;
   grid-template-columns:1fr;
@@ -200,10 +206,10 @@ section h2::after{
   box-shadow:var(--card-shadow-hover);
 }
 
-/* Image block (subtle blue placeholder) */
+/* project card image */
 .project-card-pic{
   flex:1;width:100%;
-  background:#dbeafe;          /* light blue */
+  background:#dbeafe;       
   min-height:100px;border-radius:10px;
   display:flex;align-items:center;justify-content:center;
   color:#64748b;margin-bottom:1.5rem;
@@ -212,7 +218,7 @@ section h2::after{
   width:100%;height:100%;object-fit:cover;border-radius:10px;
 }
 
-/* Text block (very light blue for distinction) */
+/* project card text added in office hours */
 .project-card-text{
   width:100%;
   border-radius:10px;
@@ -221,11 +227,11 @@ section h2::after{
   padding:1rem 1.25rem;
 }
 
-/* ====== Links ====== */
+/* linke */
 a{ color:var(--accent); }
 a:hover{ color:var(--accent-hover); }
 
-/* ====== Misc ====== */
+
 .container{ max-width:1000px;margin:0 auto;padding:0 1rem; }
 @media (min-width:768px){ .container{ padding:0 2rem; } }
 
