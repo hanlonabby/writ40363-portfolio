@@ -125,6 +125,9 @@ section{ padding:3rem 0; }
 #skills{ background:var(--alt-section-bg); }
 #projects{ background:var(--section-bg); }
 #contact{ background:var(--alt-section-bg); }
+#contact {
+  text-align: center;
+}
 
 p + p{ margin-top:1rem; }
 
@@ -227,7 +230,7 @@ section h2::after{
   padding:1rem 1.25rem;
 }
 
-/* linke */
+/* link */
 a{ color:var(--accent); }
 a:hover{ color:var(--accent-hover); }
 
