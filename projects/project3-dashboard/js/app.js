@@ -1,95 +1,104 @@
 // ==========================================
 // PROJECT 3: PERSONAL DATA DASHBOARD
-// LAB16: fetch() and JSON Basics
+// LAB16-20
 // ==========================================
 
 console.log('Dashboard app loaded!');
-console.log('LAB16: Learning fetch() API');
 
-// Function to load weather data
+// ---------------- WEATHER WIDGET ----------------
+
 function loadWeather() {
-    console.log('🌤️ Loading weather data...');
+  console.log('🌤️ Loading weather data...');
 
-    fetch('./data/weather.json')
-        .then(response => {
-            console.log('✅ Got response:', response);
-            return response.json();
-        })
-        .then(data => {
-            console.log('✅ Weather data loaded:', data);
-            displayWeather(data);
-        })
-        .catch(error => {
-            console.error('❌ Error loading weather:', error);
-            displayWeatherError();
-        });
+  const weatherDisplay = document.getElementById('weather-display');
+  // Optional: nicer loading text
+  weatherDisplay.textContent = 'Weather in Chicago, IL right now...';
+
+  fetch('./data/weather.json')
+    .then(response => {
+      console.log('✅ Got response:', response);
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok ' + response.status);
+      }
+
+      return response.json();
+    })
+    .then(data => {
+      console.log('✅ Weather data loaded:', data);
+      displayWeather(data);
+    })
+    .catch(error => {
+      console.error('❌ Error loading weather:', error);
+      displayWeatherError();
+    });
 }
 
-// Function to display weather data in the DOM
 function displayWeather(weather) {
-    console.log('📊 Displaying weather data...');
+  console.log('📊 Displaying weather data...');
 
-    const weatherDisplay = document.getElementById('weather-display');
+  const weatherDisplay = document.getElementById('weather-display');
 
-    weatherDisplay.innerHTML = `
-        <div class="weather-current">
-            <div class="weather-icon">${weather.icon}</div>
-            <div class="weather-temp">${weather.temperature}°F</div>
-            <div class="weather-location">${weather.location}</div>
-            <div class="weather-condition">${weather.condition}</div>
-        </div>
-        <div class="weather-details">
-            <div class="weather-detail">
-                <span>💧 Humidity</span>
-                <strong>${weather.humidity}%</strong>
-            </div>
-            <div class="weather-detail">
-                <span>💨 Wind Speed</span>
-                <strong>${weather.windSpeed} mph</strong>
-            </div>
-        </div>
-        <div class="weather-detail">
-    <span>🌡️ Feels Like</span>
-    <strong>${weather.feelsLike}°F</strong>
-</div>
-    `;
+  weatherDisplay.innerHTML = `
+    <div class="weather-current">
+      <div class="weather-icon">${weather.icon}</div>
+      <div class="weather-temp">${weather.temperature}°F</div>
+      <div class="weather-location">${weather.location}</div>
+      <div class="weather-condition">${weather.condition}</div>
+    </div>
+    <div class="weather-details">
+      <div class="weather-detail">
+        <span>💧 Humidity</span>
+        <strong>${weather.humidity}%</strong>
+      </div>
+      <div class="weather-detail">
+        <span>💨 Wind Speed</span>
+        <strong>${weather.windSpeed} mph</strong>
+      </div>
+      <div class="weather-detail">
+        <span>🌡️ Feels Like</span>
+        <strong>${weather.feelsLike}°F</strong>
+      </div>
+    </div>
+  `;
 
-    console.log('✅ Weather displayed successfully!');
+  console.log('✅ Weather displayed successfully!');
 }
 
-// Function to show error message if weather data fails to load
 function displayWeatherError() {
-    const weatherDisplay = document.getElementById('weather-display');
+  const weatherDisplay = document.getElementById('weather-display');
 
-    weatherDisplay.innerHTML = `
-        <div class="error-message">
-            <div class="error-icon">⚠️</div>
-            <p>Could not load weather data</p>
-            <p class="error-hint">Check console for details</p>
-        </div>
-    `;
+  weatherDisplay.innerHTML = `
+    <div class="error-message">
+      <div class="error-icon">⚠️</div>
+      <p>Could not load weather data</p>
+      <p class="error-hint">Check console for details</p>
+    </div>
+  `;
 }
 
-// Load weather data when page loads
-loadWeather();
+// ---------------- QUOTES WIDGET ----------------
 
-// Global variable to store all quotes
 let allQuotes = [];
-let currentQuoteIndex = -1; // Track current quote to avoid repeats
+let currentQuoteIndex = -1;
 
-// Function to load quotes from JSON
 function loadQuotes() {
   console.log('Loading quotes...');
 
-  fetch('data/quotes.json')
+  fetch('./data/quotes.json')
     .then(response => {
       console.log('Got quotes response:', response);
+
+      if (!response.ok) {
+        throw new Error('Quotes response was not ok ' + response.status);
+      }
+
       return response.json();
     })
     .then(data => {
       console.log('Quotes data:', data);
-      allQuotes = data; // Store quotes in global variable
-      displayRandomQuote(); // Show first quote
+      allQuotes = data;
+      displayRandomQuote();
     })
     .catch(error => {
       console.error('Error loading quotes:', error);
@@ -97,15 +106,12 @@ function loadQuotes() {
     });
 }
 
-// Function to display a random quote
 function displayRandomQuote() {
-  // Make sure we have quotes loaded
   if (allQuotes.length === 0) {
     console.error('No quotes available');
     return;
   }
 
-  // Get random index (different from current)
   let randomIndex;
   do {
     randomIndex = Math.floor(Math.random() * allQuotes.length);
@@ -114,7 +120,6 @@ function displayRandomQuote() {
   currentQuoteIndex = randomIndex;
   const quote = allQuotes[randomIndex];
 
-  // Display the quote
   const quotesDisplay = document.getElementById('quotes-display');
   quotesDisplay.innerHTML = `
     <div class="quote-card">
@@ -126,7 +131,6 @@ function displayRandomQuote() {
   console.log('Displayed quote:', quote);
 }
 
-// Function to show error message
 function displayQuotesError() {
   const quotesDisplay = document.getElementById('quotes-display');
   quotesDisplay.innerHTML = `
@@ -136,37 +140,36 @@ function displayQuotesError() {
   `;
 }
 
-// Call loadQuotes when page loads
-loadQuotes();
+function setupQuotesButton() {
+  const newQuoteBtn = document.getElementById('new-quote-btn');
 
-// ========================================
-// TASKS WIDGET (from LAB18)
-// ========================================
-
-// Function to load tasks from localStorage
-function loadTasks() {
-  const tasksJSON = localStorage.getItem('dashboardTasks');
-
-  if (tasksJSON) {
-    return JSON.parse(tasksJSON);
-  } else {
-    return []; // Return empty array if no tasks yet
+  if (!newQuoteBtn) {
+    console.error('New quote button not found');
+    return;
   }
+
+  newQuoteBtn.addEventListener('click', () => {
+    console.log('New quote button clicked!');
+    displayRandomQuote();
+  });
 }
 
-// Function to save tasks to localStorage
+// ---------------- TASKS WIDGET ----------------
+
+function loadTasks() {
+  const tasksJSON = localStorage.getItem('dashboardTasks');
+  return tasksJSON ? JSON.parse(tasksJSON) : [];
+}
+
 function saveTasks(tasks) {
   localStorage.setItem('dashboardTasks', JSON.stringify(tasks));
   console.log('Tasks saved:', tasks);
 }
 
-
-// Function to display all tasks
 function displayTasks() {
   const tasks = loadTasks();
   const tasksList = document.getElementById('tasks-list');
 
-  // If no tasks, show message
   if (tasks.length === 0) {
     tasksList.innerHTML = `
       <div class="no-tasks">
@@ -177,32 +180,26 @@ function displayTasks() {
     return;
   }
 
-  // Clear existing tasks
   tasksList.innerHTML = '';
 
-  // Display each task
   tasks.forEach((task, index) => {
     const taskItem = document.createElement('div');
     taskItem.className = `task-item ${task.completed ? 'completed' : ''}`;
 
-    // Create checkbox
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
     checkbox.checked = task.completed;
     checkbox.addEventListener('change', () => toggleTask(index));
 
-    // Create task text
     const taskText = document.createElement('span');
     taskText.className = 'task-text';
     taskText.textContent = task.text;
 
-    // Create delete button
     const deleteBtn = document.createElement('button');
     deleteBtn.className = 'btn-delete';
     deleteBtn.textContent = 'Delete';
     deleteBtn.addEventListener('click', () => deleteTask(index));
 
-    // Append all elements to task item
     taskItem.appendChild(checkbox);
     taskItem.appendChild(taskText);
     taskItem.appendChild(deleteBtn);
@@ -213,14 +210,13 @@ function displayTasks() {
   updateTaskStats(tasks);
 }
 
-// Function to add a new task
 function addTask(taskText) {
   const tasks = loadTasks();
 
   const newTask = {
     text: taskText,
     completed: false,
-    id: Date.now() // Unique ID using timestamp
+    id: Date.now()
   };
 
   tasks.push(newTask);
@@ -230,25 +226,23 @@ function addTask(taskText) {
   console.log('Task added:', newTask);
 }
 
-// Set up form submission
 function setupTaskForm() {
   const taskForm = document.getElementById('task-form');
   const taskInput = document.getElementById('task-input');
 
   taskForm.addEventListener('submit', (e) => {
-    e.preventDefault(); // Prevent page reload
+    e.preventDefault();
 
     const taskText = taskInput.value.trim();
 
     if (taskText) {
       addTask(taskText);
-      taskInput.value = ''; // Clear input
-      taskInput.focus(); // Focus back on input
+      taskInput.value = '';
+      taskInput.focus();
     }
   });
 }
 
-// Function to toggle task complete/incomplete
 function toggleTask(index) {
   const tasks = loadTasks();
   tasks[index].completed = !tasks[index].completed;
@@ -258,12 +252,10 @@ function toggleTask(index) {
   console.log('Task toggled:', tasks[index]);
 }
 
-// Function to delete a task
 function deleteTask(index) {
   const tasks = loadTasks();
   const taskToDelete = tasks[index];
 
-  // Optional: Confirm before deleting
   if (confirm(`Delete task: "${taskToDelete.text}"?`)) {
     tasks.splice(index, 1);
     saveTasks(tasks);
@@ -273,7 +265,6 @@ function deleteTask(index) {
   }
 }
 
-// Function to update task statistics
 function updateTaskStats(tasks) {
   const statsDiv = document.getElementById('task-stats');
 
@@ -296,26 +287,9 @@ function updateTaskStats(tasks) {
   `;
 }
 
-// Set up "New Quote" button
-function setupQuotesButton() {
-  const newQuoteBtn = document.getElementById('new-quote-btn');
+// ---------------- THEME TOGGLE ----------------
 
-  newQuoteBtn.addEventListener('click', () => {
-    console.log('New quote button clicked!');
-    displayRandomQuote();
-  });
-}
-
-// Call setupQuotesButton after DOM is loaded
-setupQuotesButton();
-
-// Initialize tasks when page loads
-displayTasks();
-setupTaskForm();
-
-// Theme Management
 function initializeTheme() {
-  // Check for saved theme preference
   const savedTheme = localStorage.getItem('dashboardTheme');
 
   if (savedTheme === 'dark') {
@@ -329,10 +303,7 @@ function initializeTheme() {
 function toggleTheme() {
   const isDark = document.body.classList.toggle('theme-dark');
 
-  // Save preference
   localStorage.setItem('dashboardTheme', isDark ? 'dark' : 'light');
-
-  // Update icon
   updateThemeIcon(isDark ? 'dark' : 'light');
 
   console.log('Theme switched to:', isDark ? 'dark' : 'light');
@@ -341,11 +312,9 @@ function toggleTheme() {
 function updateThemeIcon(theme) {
   const themeIcon = document.querySelector('.theme-icon');
 
-  if (theme === 'dark') {
-    themeIcon.textContent = '☀️'; // Sun for dark mode (to switch to light)
-  } else {
-    themeIcon.textContent = '🌙'; // Moon for light mode (to switch to dark)
-  }
+  if (!themeIcon) return;
+
+  themeIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
 }
 
 function setupThemeToggle() {
@@ -353,9 +322,16 @@ function setupThemeToggle() {
 
   if (themeToggleBtn) {
     themeToggleBtn.addEventListener('click', toggleTheme);
+  } else {
+    console.error('Theme toggle button not found');
   }
 }
 
-// Call these when page loads
+
 initializeTheme();
 setupThemeToggle();
+loadWeather();
+loadQuotes();
+displayTasks();
+setupTaskForm();
+setupQuotesButton();

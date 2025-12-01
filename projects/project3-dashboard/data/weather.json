@@ -1,9 +1,9 @@
 {
   "location": "Chicago, IL",
-  "temperature": 60,
+  "temperature": 28,
   "condition": "Partly Cloudy",
   "icon": "⛅",
-  "humidity": 33,
-  "windSpeed": 9,
-  "feelsLike": 63
+  "humidity": 82,
+  "windSpeed": 5,
+  "feelsLike": 30
 }

@@ -108,11 +108,18 @@ header {
   grid-column: 1 / -1;
   text-align: center;
   margin-bottom: var(--space-md);
+  padding: var(--space-md);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  color: var(--color-bg-white);
+  box-shadow: var(--shadow-md);
+}
+header h1 {
+  color: var(--color-bg-white);
+}
+.dashboard-subtitle {
+  color: rgba(255,255,255,0.9);
 }
 
-header h1 {
-  color: var(--color-text-dark);
-}
 
 /* Base widget - shared by all */
 .widget {
