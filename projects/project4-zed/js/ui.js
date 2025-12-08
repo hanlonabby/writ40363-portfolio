@@ -21,10 +21,20 @@
  * @param {boolean} isPlaylistView - Whether we're viewing a playlist
  */
 function renderSongs(songs, isPlaylistView = false) {
+    console.log(`🎨 renderSongs called with ${songs.length} songs, isPlaylistView=${isPlaylistView}`);
+    
     const container = document.getElementById('songs-container');
+    
+    if (!container) {
+        console.error('❌ songs-container element not found!');
+        return;
+    }
+    
+    console.log('✓ Container found:', container);
     
     // Clear existing content
     container.innerHTML = '';
+    console.log('✓ Container cleared');
     
     // Show empty state if no songs
     if (songs.length === 0) {
@@ -33,16 +43,21 @@ function renderSongs(songs, isPlaylistView = false) {
             : 'No songs yet. Add your first song to get started! 🎵';
         
         container.innerHTML = `<p class="empty-state">${emptyMessage}</p>`;
+        console.log('📝 Empty state displayed');
         return;
     }
     
     // Create a card for each song
-    songs.forEach(song => {
+    console.log('🔨 Creating song cards...');
+    songs.forEach((song, index) => {
+        if (index < 3) {
+            console.log(`  Song ${index}:`, song.title, 'by', song.artist);
+        }
         const songCard = createSongCard(song, isPlaylistView);
         container.appendChild(songCard);
     });
     
-    console.log(`🎨 Rendered ${songs.length} songs`);
+    console.log(`✅ Rendered ${songs.length} songs to DOM`);
 }
 
 /**
@@ -101,6 +116,7 @@ function renderPlaylists(playlists) {
     // Show message if no playlists
     if (playlists.length === 0) {
         container.innerHTML = '<li class="empty-state">No playlists yet</li>';
+        renderPlaylistsOverview(playlists); // Update overview too
         return;
     }
     
@@ -109,6 +125,9 @@ function renderPlaylists(playlists) {
         const playlistItem = createPlaylistItem(playlist);
         container.appendChild(playlistItem);
     });
+    
+    // Update the overview section
+    renderPlaylistsOverview(playlists);
     
     console.log(`🎨 Rendered ${playlists.length} playlists`);
 }
@@ -132,6 +151,76 @@ function createPlaylistItem(playlist) {
     `;
     
     return li;
+}
+
+/**
+ * Render the playlists overview section at the top of main content
+ * @param {Array} playlists - Array of playlist objects
+ */
+function renderPlaylistsOverview(playlists) {
+    const container = document.getElementById('playlists-overview-cards');
+    
+    // Clear existing content
+    container.innerHTML = '';
+    
+    // Show message if no playlists
+    if (playlists.length === 0) {
+        container.innerHTML = '<p class="empty-state">Create a playlist to get started!</p>';
+        return;
+    }
+    
+    // Create a card for each playlist
+    playlists.forEach(playlist => {
+        const card = document.createElement('div');
+        card.className = 'playlist-overview-card';
+        card.dataset.playlistId = playlist.id;
+        
+        const songCount = playlist.songIds?.length || 0;
+        const songText = songCount === 1 ? 'song' : 'songs';
+        
+        card.innerHTML = `
+            <h3>${escapeHtml(playlist.name)}</h3>
+            <div class="song-count">${songCount} ${songText}</div>
+        `;
+        
+        // Click to view playlist (same logic as sidebar playlist items)
+        card.addEventListener('click', () => {
+            const playlistId = playlist.id;
+            const playlistObj = getPlaylistById(playlistId);
+            
+            if (!playlistObj) return;
+            
+            // Update state
+            setCurrentView('playlist', playlistId);
+            
+            // Update UI
+            const playlistSongs = getPlaylistSongs(playlistId);
+            renderSongs(playlistSongs, true);
+            updateViewHeader(playlistObj.name, true);
+            
+            // Reset library button states
+            document.getElementById('view-my-songs-btn').classList.remove('active');
+            document.getElementById('view-sample-library-btn').classList.remove('active');
+            
+            // Update active state on sidebar playlist items
+            document.querySelectorAll('.playlist-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            const sidebarItem = document.querySelector(`.playlist-item[data-playlist-id="${playlistId}"]`);
+            if (sidebarItem) {
+                sidebarItem.classList.add('active');
+            }
+            
+            // Update recommendations
+            updateRecommendations();
+            
+            console.log(`👁️ Viewing playlist from overview: ${playlistObj.name}`);
+        });
+        
+        container.appendChild(card);
+    });
+    
+    console.log(`🎨 Rendered playlist overview with ${playlists.length} playlists`);
 }
 
 
@@ -176,7 +265,6 @@ function createRecommendationCard(rec) {
     card.innerHTML = `
         <h4>${escapeHtml(rec.song.title)}</h4>
         <p class="artist">${escapeHtml(rec.song.artist)}</p>
-        <p class="reason">${rec.reason}</p>
         <button class="btn btn-small btn-secondary add-to-playlist-btn" data-song-id="${rec.song.id}">
             + Add to Playlist
         </button>
@@ -199,9 +287,14 @@ function updateViewHeader(title, showAllSongsButton = false) {
     const viewTitle = document.getElementById('view-title');
     const viewAllBtn = document.getElementById('view-all-btn');
     
-    viewTitle.textContent = title;
+    if (viewTitle) {
+        viewTitle.textContent = title;
+    }
     
-    // Toggle "All Songs" button visibility
+    if (!viewAllBtn) {
+        return;
+    }
+    
     if (showAllSongsButton) {
         viewAllBtn.style.display = 'inline-flex';
         viewAllBtn.classList.remove('active');
@@ -216,7 +309,7 @@ function updateViewHeader(title, showAllSongsButton = false) {
    ========================================== */
 
 /**
- * Show a simple prompt to select which playlist to add a song to
+ * Show a modal with clickable buttons to select which playlist to add a song to
  * @param {string} songId - The ID of the song to add
  */
 function showAddToPlaylistPrompt(songId) {
@@ -227,26 +320,67 @@ function showAddToPlaylistPrompt(songId) {
         return;
     }
     
-    // Create a simple list of playlist names
-    const playlistNames = playlists.map((p, i) => `${i + 1}. ${p.name}`).join('\n');
-    const choice = prompt(`Choose a playlist:\n\n${playlistNames}\n\nEnter the number:`);
+    // Get modal elements
+    const modal = document.getElementById('playlist-modal');
+    const modalBody = document.getElementById('playlist-options');
+    const closeBtn = modal.querySelector('.modal-close');
     
-    if (choice) {
-        const index = parseInt(choice) - 1;
+    // Clear previous content
+    modalBody.innerHTML = '';
+    
+    // Create a button for each playlist
+    playlists.forEach(playlist => {
+        const button = document.createElement('button');
+        button.className = 'playlist-option-btn';
         
-        if (index >= 0 && index < playlists.length) {
-            const playlist = playlists[index];
+        // Get the actual song count from songIds array
+        const songCount = playlist.songIds?.length || 0;
+        const songText = songCount === 1 ? 'song' : 'songs';
+        
+        button.innerHTML = `
+            <span>${escapeHtml(playlist.name)}</span>
+            <span class="song-count">${songCount} ${songText}</span>
+        `;
+        
+        // Add click handler to add song and close modal
+        button.addEventListener('click', () => {
             addSongToPlaylist(playlist.id, songId);
-            
-            // Show success message
-            showNotification(`Added to "${playlist.name}"!`);
-            
-            // Re-render playlists to update song counts
+            const songName = getSongById(songId)?.title || 'Song';
+            showNotification(`✓ Added "${songName}" to "${playlist.name}"!`);
             renderPlaylists(getAllPlaylists());
-        } else {
-            alert('Invalid choice!');
-        }
+            closeModal();
+        });
+        
+        modalBody.appendChild(button);
+    });
+    
+    // Show the modal
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+    
+    // Close modal function
+    function closeModal() {
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden', 'true');
     }
+    
+    // Close on X button click
+    closeBtn.onclick = closeModal;
+    
+    // Close on backdrop click
+    modal.onclick = (e) => {
+        if (e.target === modal) {
+            closeModal();
+        }
+    };
+    
+    // Close on Escape key
+    document.addEventListener('keydown', function escapeHandler(e) {
+        if (e.key === 'Escape') {
+            closeModal();
+            document.removeEventListener('keydown', escapeHandler);
+        }
+    });
 }
 
 
@@ -302,15 +436,31 @@ function clearForm(form) {
  * Call this when the page loads or when state changes significantly
  */
 function renderApp() {
-    // Render all sections
-    renderSongs(getAllSongs());
-    renderPlaylists(getAllPlaylists());
+    console.log('🎨 Starting renderApp...');
     
-    // Update recommendations (we'll implement the logic next)
-    // For now, just show empty state
+    // Check if getSongsBySource exists (it's in state.js)
+    const userSongs = typeof getSongsBySource === 'function' 
+        ? getSongsBySource('user') 
+        : [];
+    
+    console.log(`Found ${userSongs.length} user songs`);
+    
+    // Check if getAllPlaylists exists
+    const playlists = typeof getAllPlaylists === 'function'
+        ? getAllPlaylists()
+        : [];
+    
+    console.log(`Found ${playlists.length} playlists`);
+    
+    // Render all sections - start with user's songs
+    renderSongs(userSongs);
+    renderPlaylists(playlists);
+    
+    // Update recommendations
     renderRecommendations([]);
     
-    updateViewHeader('All Songs', false);
+    // Set initial view
+    updateViewHeader('My Songs', false);
     
-    console.log('🎨 Full app rendered');
+    console.log('✅ Full app rendered');
 }

@@ -10,12 +10,18 @@
    Think of this as the "database" of our app.
 */
 
+
+/* ==========================================
+   STATE OBJECT
+   ========================================== */
+
 // The main state object - holds ALL app data
 const state = {
-    songs: [],      // Array of song objects
-    playlists: [],  // Array of playlist objects
-    currentView: 'all-songs',  // What the user is currently viewing
-    selectedPlaylistId: null   // ID of currently selected playlist
+    songs: [],              // Array of song objects
+    playlists: [],          // Array of playlist objects
+    currentView: 'my-songs',    // 'my-songs', 'sample-library', 'playlist', or 'all-songs'
+    selectedPlaylistId: null,   // ID of currently selected playlist (if any)
+    currentLibrary: 'user'      // 'user' or 'sample'
 };
 
 
@@ -39,10 +45,10 @@ function generateId(prefix) {
 /**
  * Add a new song to the library
  * @param {Object} songData - Object with title, artist, genre, mood, album
+ * @param {string} source - Where the song came from: 'user' or 'sample'
  * @returns {Object} The newly created song object
  */
-function addSong(songData) {
-    // Create song object with unique ID
+function addSong(songData, source = 'user') {
     const newSong = {
         id: generateId('song'),
         title: songData.title.trim(),
@@ -50,16 +56,14 @@ function addSong(songData) {
         genre: songData.genre,
         mood: songData.mood,
         album: songData.album ? songData.album.trim() : '',
+        source: source,  // 'user' or 'sample'
         createdAt: new Date().toISOString()
     };
     
-    // Add to state
     state.songs.push(newSong);
-    
-    // Save to localStorage
     saveToLocalStorage();
     
-    console.log('✅ Song added:', newSong.title);
+    console.log(`✅ Song added (${source}):`, newSong.title);
     return newSong;
 }
 
@@ -87,6 +91,34 @@ function removeSong(songId) {
  */
 function getAllSongs() {
     return state.songs;
+}
+
+/**
+ * Get songs by source (user-added or sample)
+ * @param {string} source - 'user' or 'sample'
+ * @returns {Array} Filtered array of songs
+ */
+function getSongsBySource(source) {
+    if (source === 'user') {
+        // Treat songs with no `source` as user songs (for older saved data)
+        return state.songs.filter(song => !song.source || song.source === 'user');
+    }
+    return state.songs.filter(song => song.source === source);
+}
+
+/**
+ * Get count of songs by source
+ * @returns {Object} Object with user and sample counts
+ */
+function getSongCounts() {
+    const userSongs = getSongsBySource('user');
+    const sampleSongs = getSongsBySource('sample');
+    
+    return {
+        user: userSongs.length,
+        sample: sampleSongs.length,
+        total: state.songs.length
+    };
 }
 
 /**
@@ -133,7 +165,8 @@ function deletePlaylist(playlistId) {
     // If this was the selected playlist, reset view
     if (state.selectedPlaylistId === playlistId) {
         state.selectedPlaylistId = null;
-        state.currentView = 'all-songs';
+        state.currentView = 'my-songs';
+        state.currentLibrary = 'user';
     }
     
     saveToLocalStorage();
@@ -214,10 +247,9 @@ function getPlaylistSongs(playlistId) {
         return [];
     }
     
-    // Map song IDs to actual song objects
     return playlist.songIds
         .map(songId => getSongById(songId))
-        .filter(song => song !== undefined); // Remove any songs that no longer exist
+        .filter(song => song !== undefined);
 }
 
 
@@ -235,7 +267,10 @@ function saveToLocalStorage() {
     try {
         const dataToSave = {
             songs: state.songs,
-            playlists: state.playlists
+            playlists: state.playlists,
+            currentView: state.currentView,
+            selectedPlaylistId: state.selectedPlaylistId,
+            currentLibrary: state.currentLibrary
         };
         
         localStorage.setItem(STORAGE_KEY, JSON.stringify(dataToSave));
@@ -248,6 +283,7 @@ function saveToLocalStorage() {
 /**
  * Load data from localStorage
  * Converts JSON string back to JavaScript objects
+ * and makes sure older saved songs get a default `source`
  */
 function loadFromLocalStorage() {
     try {
@@ -255,8 +291,19 @@ function loadFromLocalStorage() {
         
         if (savedData) {
             const parsed = JSON.parse(savedData);
-            state.songs = parsed.songs || [];
+            
+            // Make sure every song has a source + createdAt for older data
+            const loadedSongs = (parsed.songs || []).map(song => ({
+                ...song,
+                source: song.source || 'user',
+                createdAt: song.createdAt || new Date().toISOString()
+            }));
+            
+            state.songs = loadedSongs;
             state.playlists = parsed.playlists || [];
+            state.currentView = parsed.currentView || 'my-songs';
+            state.selectedPlaylistId = parsed.selectedPlaylistId || null;
+            state.currentLibrary = parsed.currentLibrary || 'user';
             
             console.log('💾 Data loaded from localStorage');
             console.log(`📊 ${state.songs.length} songs, ${state.playlists.length} playlists`);
@@ -275,6 +322,9 @@ function clearAllData() {
     if (confirm('Are you sure you want to delete ALL songs and playlists?')) {
         state.songs = [];
         state.playlists = [];
+        state.currentView = 'my-songs';
+        state.selectedPlaylistId = null;
+        state.currentLibrary = 'user';
         localStorage.removeItem(STORAGE_KEY);
         console.log('🗑️ All data cleared');
         return true;
@@ -288,23 +338,111 @@ function clearAllData() {
    ========================================== */
 
 /**
- * Set the current view (all songs or specific playlist)
- * @param {string} view - 'all-songs' or 'playlist'
+ * Set the current view (my songs, sample library, or specific playlist)
+ * @param {string} view - 'my-songs', 'sample-library', 'playlist', or 'all-songs'
  * @param {string} playlistId - Required if view is 'playlist'
  */
 function setCurrentView(view, playlistId = null) {
     state.currentView = view;
     state.selectedPlaylistId = playlistId;
+    
+    // Update current library based on view
+    if (view === 'my-songs') {
+        state.currentLibrary = 'user';
+    } else if (view === 'sample-library') {
+        state.currentLibrary = 'sample';
+    }
+    
+    saveToLocalStorage(); // Persist view changes too
     console.log(`👁️ View changed to: ${view}`);
 }
 
 /**
  * Get the current view state
- * @returns {Object} Object with currentView and selectedPlaylistId
+ * @returns {Object} Object with currentView, selectedPlaylistId, and currentLibrary
  */
 function getCurrentView() {
     return {
         view: state.currentView,
-        playlistId: state.selectedPlaylistId
+        playlistId: state.selectedPlaylistId,
+        library: state.currentLibrary
     };
+}
+
+
+/* ==========================================
+   SAMPLE DATA LOADING
+   ========================================== */
+
+/**
+ * Load sample songs from JSON file
+ * Useful for testing and demonstration
+ */
+async function loadSampleSongs() {
+    try {
+        console.log('🎵 Starting to load sample songs...');
+        
+        // If we already have sample songs, don't load again
+        const sampleCount = getSongsBySource('sample').length;
+        if (sampleCount > 0) {
+            console.log(`ℹ️ ${sampleCount} sample songs already loaded`);
+            alert(`Sample songs already loaded! You have ${sampleCount} sample songs.`);
+            return true;
+        }
+        
+        // Warn if there are existing songs
+        if (state.songs.length > 0) {
+            const confirmLoad = window.confirm(
+                `You already have ${state.songs.length} songs. Loading sample data will add more songs. Continue?`
+            );
+            if (!confirmLoad) {
+                console.log('⏹️ User cancelled sample song loading');
+                return false;
+            }
+        }
+        
+        console.log('📡 Fetching data/sample-songs.json...');
+        const response = await fetch('data/sample-songs.json');
+        
+        if (!response.ok) {
+            throw new Error('Failed to load sample data');
+        }
+        
+        const sampleSongs = await response.json();
+        console.log(`📚 Loading ${sampleSongs.length} sample songs...`);
+        
+        let addedCount = 0;
+        let skippedCount = 0;
+        
+        sampleSongs.forEach((songData, index) => {
+            // Ensure required fields
+            if (!songData.title || !songData.artist || !songData.genre || !songData.mood) {
+                console.warn(`Skipping song at index ${index}: missing required fields`, songData);
+                skippedCount++;
+                return;
+            }
+            
+            // Avoid duplicates by title + artist
+            const exists = state.songs.some(
+                song =>
+                    song.title?.toLowerCase() === songData.title.toLowerCase() &&
+                    song.artist?.toLowerCase() === songData.artist.toLowerCase()
+            );
+            
+            if (!exists) {
+                addSong(songData, 'sample');
+                addedCount++;
+            } else {
+                skippedCount++;
+            }
+        });
+        
+        console.log(`✅ Successfully added ${addedCount} sample songs! (Skipped ${skippedCount})`);
+        return true;
+        
+    } catch (error) {
+        console.error('❌ Error loading sample songs:', error);
+        alert('Failed to load sample songs. Make sure the data file exists.');
+        return false;
+    }
 }

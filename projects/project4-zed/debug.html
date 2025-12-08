@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Music App</title>
+    <style>
+        body {
+            font-family: monospace;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #00ff00;
+        }
+        .test { margin: 10px 0; padding: 10px; background: #2a2a2a; }
+        .pass { color: #00ff00; }
+        .fail { color: #ff0000; }
+        button {
+            margin: 10px 5px;
+            padding: 10px 20px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Music Playlist Manager - Debug Console</h1>
+    
+    <div id="results"></div>
+    
+    <h2>Manual Tests:</h2>
+    <button onclick="testAddSong()">Test Add Song</button>
+    <button onclick="testLoadSample()">Test Load Sample Songs</button>
+    <button onclick="testButtons()">Test View Buttons</button>
+    <button onclick="window.location.href='index.html'">Go to App</button>
+    
+    <!-- Load JS files in same order as main app -->
+    <script src="js/state.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/recommendations.js"></script>
+    <script src="js/main.js"></script>
+    
+    <script>
+        const results = document.getElementById('results');
+        
+        function log(message, isPass = true) {
+            const div = document.createElement('div');
+            div.className = `test ${isPass ? 'pass' : 'fail'}`;
+            div.textContent = `${isPass ? '✓' : '✗'} ${message}`;
+            results.appendChild(div);
+        }
+        
+        // Run automatic tests
+        console.log('=== STARTING DEBUG TESTS ===');
+        
+        // Test 1: Check if state object exists
+        if (typeof state !== 'undefined') {
+            log(`State object exists: songs=${state.songs.length}, playlists=${state.playlists.length}`);
+        } else {
+            log('State object NOT found!', false);
+        }
+        
+        // Test 2: Check key functions
+        const functions = [
+            'addSong', 'getAllSongs', 'getSongsBySource', 'getSongCounts',
+            'createPlaylist', 'getAllPlaylists',
+            'renderApp', 'renderSongs', 'renderPlaylists',
+            'getRecommendations', 'getRecommendationsFromLibrary',
+            'initApp', 'setupEventListeners'
+        ];
+        
+        functions.forEach(funcName => {
+            if (typeof window[funcName] === 'function') {
+                log(`Function ${funcName} exists`);
+            } else {
+                log(`Function ${funcName} MISSING!`, false);
+            }
+        });
+        
+        // Test 3: Check if HTML elements would exist in main app
+        log('--- HTML Elements (will be missing on this page) ---');
+        const elements = [
+            'songs-container',
+            'playlists-list',
+            'recommendations-container',
+            'add-song-form',
+            'view-my-songs-btn',
+            'view-sample-library-btn',
+            'load-sample-btn'
+        ];
+        
+        elements.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                log(`Element #${id} found`);
+            } else {
+                log(`Element #${id} not found (expected on this page)`, true);
+            }
+        });
+        
+        // Test 4: Try calling getSongsBySource
+        try {
+            const userSongs = getSongsBySource('user');
+            const sampleSongs = getSongsBySource('sample');
+            log(`getSongsBySource works: user=${userSongs.length}, sample=${sampleSongs.length}`);
+        } catch (e) {
+            log(`getSongsBySource ERROR: ${e.message}`, false);
+        }
+        
+        // Test 5: Check localStorage
+        const savedData = localStorage.getItem('musicPlaylistManager');
+        if (savedData) {
+            const parsed = JSON.parse(savedData);
+            log(`LocalStorage has data: ${parsed.songs?.length || 0} songs saved`);
+        } else {
+            log('LocalStorage is empty (this is OK for a fresh start)');
+        }
+        
+        // Interactive test functions
+        function testAddSong() {
+            try {
+                addSong({
+                    title: 'Test Song',
+                    artist: 'Test Artist',
+                    genre: 'Rock',
+                    mood: 'Happy',
+                    album: 'Test Album'
+                }, 'user');
+                log('✓ addSong() worked! Check state.songs');
+                console.log('Current songs:', state.songs);
+            } catch (e) {
+                log(`✗ addSong() failed: ${e.message}`, false);
+            }
+        }
+        
+        async function testLoadSample() {
+            try {
+                log('Loading sample songs...');
+                const success = await loadSampleSongs();
+                if (success) {
+                    log(`✓ Loaded sample songs! Total: ${state.songs.length}`);
+                } else {
+                    log('✗ Failed to load sample songs', false);
+                }
+            } catch (e) {
+                log(`✗ Error loading sample: ${e.message}`, false);
+            }
+        }
+        
+        function testButtons() {
+            log('Button handlers exist:');
+            log(`  handleViewMySongs: ${typeof handleViewMySongs === 'function' ? 'YES' : 'NO'}`);
+            log(`  handleViewSampleLibrary: ${typeof handleViewSampleLibrary === 'function' ? 'YES' : 'NO'}`);
+            log(`  handleAddSong: ${typeof handleAddSong === 'function' ? 'YES' : 'NO'}`);
+            log(`  handleLoadSampleData: ${typeof handleLoadSampleData === 'function' ? 'YES' : 'NO'}`);
+        }
+        
+        console.log('=== DEBUG TESTS COMPLETE ===');
+        log('--- Tests complete! Try the manual test buttons above. ---');
+    </script>
+</body>
+</html>

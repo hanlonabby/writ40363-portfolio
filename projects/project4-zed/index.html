@@ -95,6 +95,11 @@
 
                     <button type="submit" class="btn btn-primary">Add Song</button>
                 </form>
+                
+                <!-- Load Sample Data Button -->
+                <button id="load-sample-btn" class="btn btn-text" style="width: 100%; margin-top: 1rem;">
+                    📚 Load Sample Songs
+                </button>
             </section>
 
             <!-- Playlists Section -->
@@ -124,11 +129,23 @@
 
         <!-- MAIN CONTENT: Song Library or Playlist View -->
         <section class="main-content">
+            <!-- My Playlists Overview Section -->
+            <div id="playlists-overview" class="playlists-overview">
+                <h2>My Playlists</h2>
+                <div id="playlists-overview-cards" class="playlists-overview-cards">
+                    <!-- Playlist overview cards will be dynamically populated here -->
+                    <p class="empty-state">Create a playlist to get started!</p>
+                </div>
+            </div>
+
             <div class="content-header">
-                <h2 id="view-title">All Songs</h2>
+                <h2 id="view-title">My Songs</h2>
                 <div class="view-controls">
-                    <button id="view-all-btn" class="btn btn-text active" aria-pressed="true">
-                        All Songs
+                    <button id="view-my-songs-btn" class="btn btn-text active" aria-pressed="true">
+                        My Songs
+                    </button>
+                    <button id="view-sample-library-btn" class="btn btn-text" aria-pressed="false">
+                        Sample Library
                     </button>
                 </div>
             </div>
@@ -150,6 +167,19 @@
         </aside>
 
     </main>
+
+    <!-- Playlist Selection Modal -->
+    <div id="playlist-modal" class="modal" role="dialog" aria-labelledby="modal-title" aria-hidden="true">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Add to Playlist</h3>
+                <button class="modal-close" aria-label="Close modal">&times;</button>
+            </div>
+            <div class="modal-body" id="playlist-options">
+                <!-- Playlist buttons will be dynamically added here -->
+            </div>
+        </div>
+    </div>
 
     <!-- JavaScript Modules -->
     <script src="js/state.js"></script>

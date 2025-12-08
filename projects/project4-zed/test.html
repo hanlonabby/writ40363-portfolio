@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .success { color: green; font-weight: bold; }
+        .error { color: red; font-weight: bold; }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 10px 5px;
+            cursor: pointer;
+        }
+        #output {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f0f0f0;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔬 JavaScript Diagnostic Test</h1>
+    <p>This page tests if your JavaScript files are loading correctly.</p>
+    
+    <div id="output">
+        <p>Testing...</p>
+    </div>
+    
+    <button onclick="testButton()">Click Me to Test Button</button>
+    <button onclick="window.location.href='index.html'">Go to Main App</button>
+    
+    <script src="js/state.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/recommendations.js"></script>
+    <script src="js/main.js"></script>
+    
+    <script>
+        // Test if JavaScript is running
+        console.log('✅ test.html JavaScript is running!');
+        
+        const output = document.getElementById('output');
+        let messages = [];
+        
+        // Test 1: Basic JavaScript
+        messages.push('<p class="success">✅ Basic JavaScript is working</p>');
+        
+        // Test 2: Check if state.js loaded
+        if (typeof state !== 'undefined') {
+            messages.push('<p class="success">✅ state.js loaded - state object exists</p>');
+            messages.push(`<p>State songs: ${state.songs.length}, playlists: ${state.playlists.length}</p>`);
+        } else {
+            messages.push('<p class="error">❌ state.js NOT loaded - state object missing</p>');
+        }
+        
+        // Test 3: Check if ui.js loaded
+        if (typeof renderApp !== 'undefined') {
+            messages.push('<p class="success">✅ ui.js loaded - renderApp function exists</p>');
+        } else {
+            messages.push('<p class="error">❌ ui.js NOT loaded - renderApp function missing</p>');
+        }
+        
+        // Test 4: Check if recommendations.js loaded
+        if (typeof getRecommendations !== 'undefined') {
+            messages.push('<p class="success">✅ recommendations.js loaded</p>');
+        } else {
+            messages.push('<p class="error">❌ recommendations.js NOT loaded</p>');
+        }
+        
+        // Test 5: Check if main.js loaded
+        if (typeof initApp !== 'undefined') {
+            messages.push('<p class="success">✅ main.js loaded - initApp function exists</p>');
+        } else {
+            messages.push('<p class="error">❌ main.js NOT loaded - initApp function missing</p>');
+        }
+        
+        // Test 6: Check if functions from state.js work
+        if (typeof getSongsBySource === 'function') {
+            messages.push('<p class="success">✅ getSongsBySource function available</p>');
+            try {
+                const userSongs = getSongsBySource('user');
+                messages.push(`<p>User songs: ${userSongs.length}</p>`);
+            } catch (e) {
+                messages.push(`<p class="error">❌ Error calling getSongsBySource: ${e.message}</p>`);
+            }
+        } else {
+            messages.push('<p class="error">❌ getSongsBySource function NOT available</p>');
+        }
+        
+        output.innerHTML = messages.join('');
+        
+        function testButton() {
+            alert('✅ Button click works!');
+            console.log('Button clicked successfully');
+        }
+    </script>
+</body>
+</html>

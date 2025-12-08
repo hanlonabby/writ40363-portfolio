@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Button Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        button {
+            padding: 12px 24px;
+            margin: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            background: #6366f1;
+            color: white;
+        }
+        button:hover {
+            background: #4f46e5;
+        }
+        #output {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f0f0f0;
+            border-radius: 4px;
+            min-height: 100px;
+        }
+        .success {
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔬 Simple Test</h1>
+        <p>This tests if JavaScript is working at all.</p>
+        
+        <button id="test-btn">Click Me!</button>
+        <button onclick="testInline()">Inline Click</button>
+        
+        <div id="output">
+            <p>Waiting for JavaScript...</p>
+        </div>
+    </div>
+    
+    <script>
+        console.log('✅ JavaScript is running!');
+        
+        // Test 1: Change the output immediately
+        document.getElementById('output').innerHTML = '<p class="success">✅ JavaScript loaded successfully!</p>';
+        
+        // Test 2: Button click with event listener
+        document.getElementById('test-btn').addEventListener('click', function() {
+            const output = document.getElementById('output');
+            output.innerHTML += '<p>✅ Event listener works! Button was clicked.</p>';
+            console.log('Button clicked via event listener');
+        });
+        
+        // Test 3: Inline onclick
+        function testInline() {
+            const output = document.getElementById('output');
+            output.innerHTML += '<p>✅ Inline onclick works!</p>';
+            console.log('Button clicked via inline onclick');
+        }
+        
+        console.log('All tests set up. Try clicking the buttons!');
+    </script>
+</body>
+</html>

@@ -24,8 +24,23 @@ function getRecommendations(maxRecommendations = 5) {
         return [];
     }
     
+    return getRecommendationsFromLibrary(allSongs, maxRecommendations);
+}
+
+/**
+ * Generate recommendations from a specific library of songs
+ * @param {Array} library - Array of songs to generate recommendations from
+ * @param {number} maxRecommendations - Maximum number to return
+ * @returns {Array} Array of recommendation objects
+ */
+function getRecommendationsFromLibrary(library, maxRecommendations = 5) {
+    // Need at least 2 songs to make recommendations
+    if (library.length < 2) {
+        return [];
+    }
+    
     // Get the most recently added songs (last 3) as "seed" songs
-    const recentSongs = allSongs.slice(-3);
+    const recentSongs = library.slice(-3);
     
     // Collect all recommendations from seed songs
     const recommendations = [];
@@ -33,7 +48,7 @@ function getRecommendations(maxRecommendations = 5) {
     
     recentSongs.forEach(seedSong => {
         // Find similar songs based on this seed
-        const similarSongs = findSimilarSongs(seedSong, allSongs);
+        const similarSongs = findSimilarSongs(seedSong, library);
         
         similarSongs.forEach(result => {
             // Only add if we haven't recommended it yet

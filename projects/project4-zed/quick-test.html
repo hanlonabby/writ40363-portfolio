@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Test</title>
+</head>
+<body>
+    <h1>Quick Button Test</h1>
+    <button id="load-sample-btn">📚 Load Sample Songs (TEST)</button>
+    <div id="output" style="margin-top: 20px; padding: 20px; background: #f0f0f0;"></div>
+    
+    <script src="js/state.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/recommendations.js"></script>
+    <script src="js/main.js"></script>
+    
+    <script>
+        console.log('=== QUICK TEST PAGE ===');
+        
+        // Check if the button exists
+        const btn = document.getElementById('load-sample-btn');
+        console.log('Button found:', btn !== null);
+        
+        // Check if the handler function exists
+        console.log('handleLoadSampleData exists:', typeof handleLoadSampleData === 'function');
+        
+        // Try to attach the listener manually
+        if (btn && typeof handleLoadSampleData === 'function') {
+            btn.addEventListener('click', function() {
+                console.log('🖱️ BUTTON CLICKED!');
+                document.getElementById('output').innerHTML += '<p>Button was clicked!</p>';
+                handleLoadSampleData();
+            });
+            console.log('✅ Listener attached manually');
+        } else {
+            console.error('❌ Cannot attach listener');
+        }
+        
+        // Also test if loadSampleSongs exists
+        console.log('loadSampleSongs exists:', typeof loadSampleSongs === 'function');
+        
+        document.getElementById('output').innerHTML = `
+            <p>Button element: ${btn ? '✓ Found' : '✗ Not found'}</p>
+            <p>handleLoadSampleData: ${typeof handleLoadSampleData === 'function' ? '✓ Exists' : '✗ Missing'}</p>
+            <p>loadSampleSongs: ${typeof loadSampleSongs === 'function' ? '✓ Exists' : '✗ Missing'}</p>
+            <p><strong>Click the button above to test!</strong></p>
+        `;
+    </script>
+</body>
+</html>

@@ -1,0 +1,703 @@
+[
+  {
+    "title": "Like a Rolling Stone",
+    "artist": "Bob Dylan",
+    "genre": "Rock",
+    "mood": "Energetic",
+    "album": "Highway 61 Revisited"
+  },
+  {
+    "title": "Respect",
+    "artist": "Aretha Franklin",
+    "genre": "R&B",
+    "mood": "Energetic",
+    "album": "I Never Loved a Man the Way I Love You"
+  },
+  {
+    "title": "Imagine",
+    "artist": "John Lennon",
+    "genre": "Pop",
+    "mood": "Peaceful",
+    "album": "Imagine"
+  },
+  {
+    "title": "What's Going On",
+    "artist": "Marvin Gaye",
+    "genre": "R&B",
+    "mood": "Sad",
+    "album": "What's Going On"
+  },
+  {
+    "title": "Smells Like Teen Spirit",
+    "artist": "Nirvana",
+    "genre": "Rock",
+    "mood": "Angry",
+    "album": "Nevermind"
+  },
+  {
+    "title": "Bohemian Rhapsody",
+    "artist": "Queen",
+    "genre": "Rock",
+    "mood": "Epic",
+    "album": "A Night at the Opera"
+  },
+  {
+    "title": "Hey Jude",
+    "artist": "The Beatles",
+    "genre": "Rock",
+    "mood": "Happy",
+    "album": "The Beatles (White Album)"
+  },
+  {
+    "title": "Billie Jean",
+    "artist": "Michael Jackson",
+    "genre": "Pop",
+    "mood": "Energetic",
+    "album": "Thriller"
+  },
+  {
+    "title": "Purple Haze",
+    "artist": "Jimi Hendrix",
+    "genre": "Rock",
+    "mood": "Energetic",
+    "album": "Are You Experienced"
+  },
+  {
+    "title": "Superstition",
+    "artist": "Stevie Wonder",
+    "genre": "R&B",
+    "mood": "Happy",
+    "album": "Talking Book"
+  },
+  {
+    "title": "Waterloo Sunset",
+    "artist": "The Kinks",
+    "genre": "Rock",
+    "mood": "Peaceful",
+    "album": "Something Else by The Kinks"
+  },
+  {
+    "title": "God Only Knows",
+    "artist": "The Beach Boys",
+    "genre": "Pop",
+    "mood": "Romantic",
+    "album": "Pet Sounds"
+  },
+  {
+    "title": "A Change Is Gonna Come",
+    "artist": "Sam Cooke",
+    "genre": "R&B",
+    "mood": "Sad",
+    "album": "Ain't That Good News"
+  },
+  {
+    "title": "I Want to Hold Your Hand",
+    "artist": "The Beatles",
+    "genre": "Pop",
+    "mood": "Happy",
+    "album": "Meet the Beatles!"
+  },
+  {
+    "title": "Strawberry Fields Forever",
+    "artist": "The Beatles",
+    "genre": "Rock",
+    "mood": "Chill",
+    "album": "Magical Mystery Tour"
+  },
+  {
+    "title": "Good Vibrations",
+    "artist": "The Beach Boys",
+    "genre": "Pop",
+    "mood": "Happy",
+    "album": "Smiley Smile"
+  },
+  {
+    "title": "Johnny B. Goode",
+    "artist": "Chuck Berry",
+    "genre": "Rock",
+    "mood": "Energetic",
+    "album": "Chuck Berry Is on Top"
+  },
+  {
+    "title": "Hound Dog",
+    "artist": "Elvis Presley",
+    "genre": "Rock",
+    "mood": "Energetic",
+    "album": "Elvis Presley"
+  },
+  {
+    "title": "Let It Be",
+    "artist": "The Beatles",
+    "genre": "Rock",
+    "mood": "Peaceful",
+    "album": "Let It Be"
+  },
+  {
+    "title": "Born to Run",
+    "artist": "Bruce Springsteen",
+    "genre": "Rock",
+    "mood": "Energetic",
+    "album": "Born to Run"
+  },
+  {
+    "title": "The Weight",
+    "artist": "The Band",
+    "genre": "Rock",
+    "mood": "Chill",
+    "album": "Music from Big Pink"
+  },
+  {
+    "title": "Hotel California",
+    "artist": "Eagles",
+    "genre": "Rock",
+    "mood": "Chill",
+    "album": "Hotel California"
+  },
+  {
+    "title": "Stairway to Heaven",
+    "artist": "Led Zeppelin",
+    "genre": "Rock",
+    "mood": "Epic",
+    "album": "Led Zeppelin IV"
+  },
+  {
+    "title": "Sweet Child O' Mine",
+    "artist": "Guns N' Roses",
+    "genre": "Rock",
+    "mood": "Energetic",
+    "album": "Appetite for Destruction"
+  },
+  {
+    "title": "My Girl",
+    "artist": "The Temptations",
+    "genre": "R&B",
+    "mood": "Happy",
+    "album": "The Temptations Sing Smokey"
+  },
+  {
+    "title": "Crazy",
+    "artist": "Patsy Cline",
+    "genre": "Country",
+    "mood": "Sad",
+    "album": "Showcase"
+  },
+  {
+    "title": "I Got You (I Feel Good)",
+    "artist": "James Brown",
+    "genre": "R&B",
+    "mood": "Happy",
+    "album": "Out of Sight"
+  },
+  {
+    "title": "Dancing Queen",
+    "artist": "ABBA",
+    "genre": "Pop",
+    "mood": "Happy",
+    "album": "Arrival"
+  },
+  {
+    "title": "Sweet Dreams (Are Made of This)",
+    "artist": "Eurythmics",
+    "genre": "Pop",
+    "mood": "Energetic",
+    "album": "Sweet Dreams (Are Made of This)"
+  },
+  {
+    "title": "Lose Yourself",
+    "artist": "Eminem",
+    "genre": "Hip-Hop",
+    "mood": "Energetic",
+    "album": "8 Mile Soundtrack"
+  },
+  {
+    "title": "One",
+    "artist": "U2",
+    "genre": "Rock",
+    "mood": "Sad",
+    "album": "Achtung Baby"
+  },
+  {
+    "title": "I Will Always Love You",
+    "artist": "Whitney Houston",
+    "genre": "Pop",
+    "mood": "Romantic",
+    "album": "The Bodyguard Soundtrack"
+  },
+  {
+    "title": "No Woman, No Cry",
+    "artist": "Bob Marley & The Wailers",
+    "genre": "Other",
+    "mood": "Peaceful",
+    "album": "Live!"
+  },
+  {
+    "title": "Dreams",
+    "artist": "Fleetwood Mac",
+    "genre": "Rock",
+    "mood": "Chill",
+    "album": "Rumours"
+  },
+  {
+    "title": "Redemption Song",
+    "artist": "Bob Marley & The Wailers",
+    "genre": "Other",
+    "mood": "Peaceful",
+    "album": "Uprising"
+  },
+  {
+    "title": "Walk This Way",
+    "artist": "Run-D.M.C.",
+    "genre": "Hip-Hop",
+    "mood": "Energetic",
+    "album": "Raising Hell"
+  },
+  {
+    "title": "Tears in Heaven",
+    "artist": "Eric Clapton",
+    "genre": "Rock",
+    "mood": "Sad",
+    "album": "Unplugged"
+  },
+  {
+    "title": "Stayin' Alive",
+    "artist": "Bee Gees",
+    "genre": "Pop",
+    "mood": "Energetic",
+    "album": "Saturday Night Fever Soundtrack"
+  },
+  {
+    "title": "(I Can't Get No) Satisfaction",
+    "artist": "The Rolling Stones",
+    "genre": "Rock",
+    "mood": "Energetic",
+    "album": "Out of Our Heads"
+  },
+  {
+    "title": "Purple Rain",
+    "artist": "Prince",
+    "genre": "Pop",
+    "mood": "Epic",
+    "album": "Purple Rain"
+  },
+  {
+    "title": "Hallelujah",
+    "artist": "Leonard Cohen",
+    "genre": "Other",
+    "mood": "Peaceful",
+    "album": "Various Positions"
+  },
+  {
+    "title": "Isn't She Lovely",
+    "artist": "Stevie Wonder",
+    "genre": "R&B",
+    "mood": "Happy",
+    "album": "Songs in the Key of Life"
+  },
+  {
+    "title": "American Pie",
+    "artist": "Don McLean",
+    "genre": "Rock",
+    "mood": "Chill",
+    "album": "American Pie"
+  },
+  {
+    "title": "Wonderwall",
+    "artist": "Oasis",
+    "genre": "Rock",
+    "mood": "Chill",
+    "album": "(What's the Story) Morning Glory?"
+  },
+  {
+    "title": "Someone Like You",
+    "artist": "Adele",
+    "genre": "Pop",
+    "mood": "Sad",
+    "album": "21"
+  },
+  {
+    "title": "Uptown Funk",
+    "artist": "Mark Ronson ft. Bruno Mars",
+    "genre": "Pop",
+    "mood": "Happy",
+    "album": "Uptown Special"
+  },
+  {
+    "title": "Rolling in the Deep",
+    "artist": "Adele",
+    "genre": "Pop",
+    "mood": "Angry",
+    "album": "21"
+  },
+  {
+    "title": "Happy",
+    "artist": "Pharrell Williams",
+    "genre": "Pop",
+    "mood": "Happy",
+    "album": "Girl"
+  },
+  {
+    "title": "Shape of You",
+    "artist": "Ed Sheeran",
+    "genre": "Pop",
+    "mood": "Happy",
+    "album": "÷"
+  },
+  {
+    "title": "Blinding Lights",
+    "artist": "The Weeknd",
+    "genre": "Pop",
+    "mood": "Energetic",
+    "album": "After Hours"
+  },
+
+  {
+    "title": "As It Was",
+    "artist": "Harry Styles",
+    "genre": "Pop",
+    "mood": "Melancholy",
+    "album": ""
+  },
+  {
+    "title": "Pancho and Lefty",
+    "artist": "Townes Van Zandt",
+    "genre": "Country",
+    "mood": "Storytelling",
+    "album": ""
+  },
+  {
+    "title": "Truth Hurts",
+    "artist": "Lizzo",
+    "genre": "Hip Hop",
+    "mood": "Confident",
+    "album": ""
+  },
+  {
+    "title": "Without You",
+    "artist": "Harry Nilsson",
+    "genre": "Pop",
+    "mood": "Heartbroken",
+    "album": ""
+  },
+  {
+    "title": "You're So Vain",
+    "artist": "Carly Simon",
+    "genre": "Soft Rock",
+    "mood": "Sassy",
+    "album": ""
+  },
+  {
+    "title": "Time After Time",
+    "artist": "Cyndi Lauper",
+    "genre": "Pop",
+    "mood": "Nostalgic",
+    "album": ""
+  },
+  {
+    "title": "Where Is My Mind?",
+    "artist": "Pixies",
+    "genre": "Alternative Rock",
+    "mood": "Surreal",
+    "album": ""
+  },
+  {
+    "title": "Stronger",
+    "artist": "Kanye West",
+    "genre": "Hip Hop",
+    "mood": "Motivational",
+    "album": ""
+  },
+  {
+    "title": "So What",
+    "artist": "Miles Davis",
+    "genre": "Jazz",
+    "mood": "Chill",
+    "album": ""
+  },
+  {
+    "title": "Tití Me Preguntó",
+    "artist": "Bad Bunny",
+    "genre": "Reggaeton",
+    "mood": "Playful",
+    "album": ""
+  },
+  {
+    "title": "Old Town Road",
+    "artist": "Lil Nas X",
+    "genre": "Hip Hop",
+    "mood": "Fun",
+    "album": ""
+  },
+  {
+    "title": "Cannonball",
+    "artist": "The Breeders",
+    "genre": "Alternative Rock",
+    "mood": "Energetic",
+    "album": ""
+  },
+  {
+    "title": "House of Balloons",
+    "artist": "The Weeknd",
+    "genre": "R&B",
+    "mood": "Moody",
+    "album": ""
+  },
+  {
+    "title": "Cranes in the Sky",
+    "artist": "Solange",
+    "genre": "R&B",
+    "mood": "Introspective",
+    "album": ""
+  },
+  {
+    "title": "A Milli",
+    "artist": "Lil Wayne",
+    "genre": "Hip Hop",
+    "mood": "Intense",
+    "album": ""
+  },
+  {
+    "title": "212",
+    "artist": "Azealia Banks",
+    "genre": "Hip Hop",
+    "mood": "Aggressive",
+    "album": ""
+  },
+  {
+    "title": "Buddy Holly",
+    "artist": "Weezer",
+    "genre": "Alternative Rock",
+    "mood": "Upbeat",
+    "album": ""
+  },
+  {
+    "title": "I Can't Help Myself (Sugar Pie, Honey Bunch)",
+    "artist": "Four Tops",
+    "genre": "Soul",
+    "mood": "Joyful",
+    "album": ""
+  },
+  {
+    "title": "Bad Romance",
+    "artist": "Lady Gaga",
+    "genre": "Pop",
+    "mood": "Dramatic",
+    "album": ""
+  },
+  {
+    "title": "Cross Road Blues",
+    "artist": "Robert Johnson",
+    "genre": "Blues",
+    "mood": "Haunted",
+    "album": ""
+  },
+  {
+    "title": "Just a Friend",
+    "artist": "Biz Markie",
+    "genre": "Hip Hop",
+    "mood": "Bittersweet",
+    "album": ""
+  },
+  {
+    "title": "Oye Como Va",
+    "artist": "Santana",
+    "genre": "Latin Rock",
+    "mood": "Festive",
+    "album": ""
+  },
+  {
+    "title": "Back That Azz Up",
+    "artist": "Juvenile feat. Lil Wayne and Mannie Fresh",
+    "genre": "Hip Hop",
+    "mood": "Party",
+    "album": ""
+  },
+  {
+    "title": "Our Lips Are Sealed",
+    "artist": "The Go-Go's",
+    "genre": "New Wave",
+    "mood": "Carefree",
+    "album": ""
+  },
+  {
+    "title": "Sunday Mornin' Comin' Down",
+    "artist": "Kris Kristofferson",
+    "genre": "Country",
+    "mood": "Lonely",
+    "album": ""
+  },
+  {
+    "title": "Rhythm Nation",
+    "artist": "Janet Jackson",
+    "genre": "R&B",
+    "mood": "Urgent",
+    "album": ""
+  },
+  {
+    "title": "Move On Up",
+    "artist": "Curtis Mayfield",
+    "genre": "Soul",
+    "mood": "Uplifting",
+    "album": ""
+  },
+  {
+    "title": "Stand by Your Man",
+    "artist": "Tammy Wynette",
+    "genre": "Country",
+    "mood": "Devoted",
+    "album": ""
+  },
+  {
+    "title": "Solsbury Hill",
+    "artist": "Peter Gabriel",
+    "genre": "Rock",
+    "mood": "Hopeful",
+    "album": ""
+  },
+  {
+    "title": "The House of the Rising Sun",
+    "artist": "The Animals",
+    "genre": "Rock",
+    "mood": "Dark",
+    "album": ""
+  },
+  {
+    "title": "Midnight Train to Georgia",
+    "artist": "Gladys Knight and the Pips",
+    "genre": "Soul",
+    "mood": "Bittersweet",
+    "album": ""
+  },
+  {
+    "title": "Goodbye Earl",
+    "artist": "Dixie Chicks",
+    "genre": "Country",
+    "mood": "Defiant",
+    "album": ""
+  },
+  {
+    "title": "Fade Into You",
+    "artist": "Mazzy Star",
+    "genre": "Dream Pop",
+    "mood": "Dreamy",
+    "album": ""
+  },
+  {
+    "title": "Come as You Are",
+    "artist": "Nirvana",
+    "genre": "Rock",
+    "mood": "Moody",
+    "album": ""
+  },
+  {
+    "title": "Never Too Much",
+    "artist": "Luther Vandross",
+    "genre": "R&B",
+    "mood": "Romantic",
+    "album": ""
+  },
+  {
+    "title": "Get Lucky",
+    "artist": "Daft Punk feat. Pharrell Williams",
+    "genre": "Disco",
+    "mood": "Funky",
+    "album": ""
+  },
+  {
+    "title": "Help Me",
+    "artist": "Joni Mitchell",
+    "genre": "Folk",
+    "mood": "Conflicted",
+    "album": ""
+  },
+  {
+    "title": "Boom Boom",
+    "artist": "John Lee Hooker",
+    "genre": "Blues",
+    "mood": "Swaggering",
+    "album": ""
+  },
+  {
+    "title": "Into the Mystic",
+    "artist": "Van Morrison",
+    "genre": "Folk Rock",
+    "mood": "Warm",
+    "album": ""
+  },
+  {
+    "title": "Crying",
+    "artist": "Roy Orbison",
+    "genre": "Pop",
+    "mood": "Dramatic",
+    "album": ""
+  },
+  {
+    "title": "Ku Klux Klan",
+    "artist": "Steel Pulse",
+    "genre": "Reggae",
+    "mood": "Political",
+    "album": ""
+  },
+  {
+    "title": "No Ordinary Love",
+    "artist": "Sade",
+    "genre": "R&B",
+    "mood": "Sensual",
+    "album": ""
+  },
+  {
+    "title": "Loser",
+    "artist": "Beck",
+    "genre": "Alternative Rock",
+    "mood": "Sarcastic",
+    "album": ""
+  },
+  {
+    "title": "Livin' on a Prayer",
+    "artist": "Bon Jovi",
+    "genre": "Rock",
+    "mood": "Anthemic",
+    "album": ""
+  },
+  {
+    "title": "A&W",
+    "artist": "Lana Del Rey",
+    "genre": "Alternative",
+    "mood": "Dark",
+    "album": ""
+  },
+  {
+    "title": "White Rabbit",
+    "artist": "Jefferson Airplane",
+    "genre": "Psychedelic Rock",
+    "mood": "Trippy",
+    "album": ""
+  },
+  {
+    "title": "Bam Bam",
+    "artist": "Sister Nancy",
+    "genre": "Dancehall",
+    "mood": "Confident",
+    "album": ""
+  },
+  {
+    "title": "The Rain (Supa Dupa Fly)",
+    "artist": "Missy Elliott",
+    "genre": "Hip Hop",
+    "mood": "Slick",
+    "album": ""
+  },
+  {
+    "title": "Africa",
+    "artist": "Toto",
+    "genre": "Pop Rock",
+    "mood": "Nostalgic",
+    "album": ""
+  },
+  {
+    "title": "Bad and Boujee",
+    "artist": "Migos feat. Lil Uzi Vert",
+    "genre": "Hip Hop",
+    "mood": "Flexing",
+    "album": ""
+  }
+]
