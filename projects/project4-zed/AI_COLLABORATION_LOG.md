@@ -1056,3 +1056,156 @@ Hover over any playlist (sidebar or overview card)
 Click the trash icon 🗑️
 Confirm the deletion in the dialog
 The playlist is removed from both locations instantly
+
+ <---NOTE: I'm majorly struggling right now because I have made all of my changes to my portfolio in my index.html linked under my project 1 index.html. I have no idea if this is the correct approach, because I understand that there's an additonal index.html file that resides outside of any of my individual projects. At this stage, I consulted ChatGPT to help me work through my problems. I'm attaching the prompt that I typed in.--->
+ - Prompt: okay. let's start from scratch. Basically all of my most updated information and projects that are linked to one another have been updated in my project 1 index.html. the index.html that exists outside of all of my other projects (the index file that's listed below the sandbox file) is an old version of project 1. my project 1 represents my portfolio that i need to deploy into a live site that my professor can see with all of my other projects (projects 2-4) listed within the portfolio. I think i was supposed to update the outermost html file, but now when I copy and paste the contents from project 1's index.html file to the outermost html file and switch the two conents, it doesn't preview correctly. So with this, i switched the content that I need published/deployed back to inside project 1. to specify one more time, project 1's index.html file has all of the correct content i need to be published on my live site. am i on the right track/can you walk me through the next steps into publishing this live site, or did I mess my project up? I'm uploading a screenshot of my VS code so you can see the areas of html files i'm talking about.
+
+ - ChatGPT Response:
+ You did not mess your project up 😊
+Your folder structure actually looks good, and it’s totally fine that the “real” portfolio lives in projects/project1-original/index.html.
+
+Let’s use that page as-is and just wire GitHub Pages around it.
+
+0. Mental model (just so it feels less scary)
+
+GitHub Pages serves your repo at
+
+https://hanlonabby.github.io/writ40363-portfolio/
+
+By default it looks for the root index.html.
+
+Any other HTML file (like projects/project1-original/index.html) can also be viewed directly by URL.
+
+Right now:
+
+projects/project1-original/index.html ✅ contains the correct portfolio.
+
+Root index.html ⛔ is an old version we don’t really want.
+
+That’s why you see confusing behavior.
+
+We’ll keep project1-original exactly as it is and make the root index.html just redirect to it.
+
+1️⃣ Make root index.html a redirect to Project 1
+
+In VS Code, open the outermost index.html (the one that sits directly under the repo root, not inside projects/).
+
+Replace its entire contents with this:
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Abby Hanlon Portfolio</title>
+
+  <!-- Redirect immediately to the actual portfolio page -->
+  <meta http-equiv="refresh" content="0; url=projects/project1-original/">
+</head>
+<body>
+  <p>
+    Redirecting to my portfolio... 
+    If this doesn’t happen automatically,
+    <a href="projects/project1-original/">click here</a>.
+  </p>
+</body>
+</html>
+
+
+This means:
+
+Visiting https://hanlonabby.github.io/writ40363-portfolio/ will instantly send your professor to
+https://hanlonabby.github.io/writ40363-portfolio/projects/project1-original/
+
+You don’t have to touch the working project1-original/index.html at all.
+
+2️⃣ Make sure Project 1 is still correct (no changes needed)
+
+Your working page should stay here:
+
+projects/project1-original/index.html
+
+This is the one you already preview with Live Server at
+http://127.0.0.1:3000/projects/project1-original/ — keep using that.
+
+All your internal links like:
+
+<link rel="stylesheet" href="css/style.css">
+<img src="images/Headshot.jpg" ...>
+<a class="project-link" href="../project3-dashboard/">View Project</a>
+
+
+are correct as long as:
+
+There’s a css folder inside project1-original
+
+There’s an images folder inside project1-original
+
+projects/project2-tracker, projects/project3-dashboard, projects/project4-zed each have their own index.html
+
+From your screenshot, that all looks good ✅
+
+3️⃣ Commit and push your changes
+
+In VS Code terminal:
+
+git status        # should show modified: index.html
+git add index.html
+git commit -m "Add redirect from root to project1 portfolio"
+git push origin main
+
+4️⃣ Configure / confirm GitHub Pages
+
+On GitHub, open your repo:
+https://github.com/hanlonabby/writ40363-portfolio
+
+Click Settings → Pages (left sidebar).
+
+Under Build and deployment:
+
+Source: Deploy from a branch
+
+Branch: main and folder / (root)
+
+Click Save if you changed anything.
+
+GitHub will now build. After ~30–60 seconds, that same page should show a green check and a URL like:
+
+Your site is live at
+https://hanlonabby.github.io/writ40363-portfolio/
+
+5️⃣ Test your live portfolio
+
+Open (ideally in a private window):
+
+https://hanlonabby.github.io/writ40363-portfolio/
+
+
+You should see:
+
+A quick redirect
+
+Then your Project 1 portfolio page with:
+
+header + headshot
+
+EmpathyHQ + Eventric cards (with LinkedIn buttons)
+
+Project 2/3/4 cards that link out to the other projects
+
+If any images in the new cards are still blank, that’s usually just a filename mismatch (.jpg vs .jpeg or capitalization). We can fix those one by one once the main deployment is working.
+
+TL;DR
+
+You didn’t break anything.
+
+We’re not moving or rewriting your good portfolio.
+
+We’re just:
+
+Making root index.html a tiny redirect page.
+
+Turning on (or confirming) GitHub Pages from main.
+
+Using the root URL in your assignment.
+
+If you want, paste the Pages URL GitHub shows you under Settings → Pages, plus one of your “missing” image filenames from project1-original/images, and I’ll double-check the exact <img> paths for you.
