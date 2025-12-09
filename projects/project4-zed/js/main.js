@@ -165,6 +165,12 @@ function setupPlaylistListeners() {
     } else {
         console.error('❌ Playlists list not found!');
     }
+    
+    // Overview cards container (for delete buttons on overview cards)
+    const overviewCards = document.getElementById('playlists-overview-cards');
+    if (overviewCards) {
+        overviewCards.addEventListener('click', handleOverviewCardAction);
+    }
 }
 
 
@@ -365,6 +371,16 @@ function handleRecommendationAction(event) {
  * @param {Event} event - The click event
  */
 function handlePlaylistClick(event) {
+    const target = event.target;
+    
+    // Check if delete button was clicked
+    if (target.classList.contains('delete-playlist-btn')) {
+        const playlistId = target.dataset.playlistId;
+        handleDeletePlaylist(playlistId);
+        event.stopPropagation();
+        return;
+    }
+    
     // Find the playlist item (might click on child element)
     const playlistItem = event.target.closest('.playlist-item');
     
@@ -397,6 +413,54 @@ function handlePlaylistClick(event) {
     updateRecommendations();
     
     console.log(`👁️ Viewing playlist: ${playlist.name}`);
+}
+
+/**
+ * Handle deleting a playlist
+ * @param {string} playlistId - The ID of the playlist to delete
+ */
+function handleDeletePlaylist(playlistId) {
+    const playlist = getPlaylistById(playlistId);
+    
+    if (!playlist) return;
+    
+    // Confirm deletion
+    if (!confirm(`Are you sure you want to delete "${playlist.name}"?`)) {
+        return;
+    }
+    
+    // Delete the playlist
+    deletePlaylist(playlistId);
+    
+    // Re-render playlists
+    renderPlaylists(getAllPlaylists());
+    
+    // If we were viewing this playlist, switch to My Songs view
+    const currentView = getCurrentView();
+    if (currentView.view === 'playlist' && currentView.playlistId === playlistId) {
+        handleViewMySongs();
+    }
+    
+    // Update recommendations
+    updateRecommendations();
+    
+    console.log(`🗑️ Deleted playlist: ${playlist.name}`);
+}
+
+/**
+ * Handle clicks on overview cards (including delete buttons)
+ * @param {Event} event - The click event
+ */
+function handleOverviewCardAction(event) {
+    const target = event.target;
+    
+    // Check if delete button was clicked
+    if (target.classList.contains('delete-playlist-btn-card')) {
+        const playlistId = target.dataset.playlistId;
+        handleDeletePlaylist(playlistId);
+        event.stopPropagation();
+        return;
+    }
 }
 
 

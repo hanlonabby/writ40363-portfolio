@@ -331,11 +331,53 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.playlist-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1;
+    min-width: 0;
+}
+
+.playlist-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .playlist-item:hover {
     background-color: var(--color-bg-tertiary);
     border-color: var(--color-primary);
+}
+
+.delete-playlist-btn {
+    opacity: 0;
+    transition: all var(--transition-base);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.125rem;
+    padding: var(--spacing-xs);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.playlist-item:hover .delete-playlist-btn {
+    opacity: 1;
+}
+
+.delete-playlist-btn:hover {
+    background-color: rgba(239, 68, 68, 0.1);
+    transform: scale(1.1);
+}
+
+.delete-playlist-btn:active {
+    transform: scale(0.95);
 }
 
 .playlist-item.active {
@@ -395,6 +437,39 @@ body {
     transition: all var(--transition-base);
     position: relative;
     overflow: hidden;
+}
+
+.delete-playlist-btn-card {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    opacity: 0;
+    transition: all var(--transition-base);
+    background: rgba(239, 68, 68, 0.9);
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 6px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    width: 28px;
+    height: 28px;
+}
+
+.playlist-overview-card:hover .delete-playlist-btn-card {
+    opacity: 1;
+}
+
+.delete-playlist-btn-card:hover {
+    background: rgba(220, 38, 38, 1);
+    transform: scale(1.1);
+}
+
+.delete-playlist-btn-card:active {
+    transform: scale(0.95);
 }
 
 .playlist-overview-card::before {

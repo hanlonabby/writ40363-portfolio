@@ -146,8 +146,13 @@ function createPlaylistItem(playlist) {
     const songCount = playlist.songIds.length;
     
     li.innerHTML = `
-        <span class="playlist-name">${escapeHtml(playlist.name)}</span>
-        <span class="playlist-count">${songCount} ${songCount === 1 ? 'song' : 'songs'}</span>
+        <div class="playlist-info">
+            <span class="playlist-name">${escapeHtml(playlist.name)}</span>
+            <span class="playlist-count">${songCount} ${songCount === 1 ? 'song' : 'songs'}</span>
+        </div>
+        <button class="btn-icon delete-playlist-btn" data-playlist-id="${playlist.id}" aria-label="Delete playlist" title="Delete playlist">
+            🗑️
+        </button>
     `;
     
     return li;
@@ -179,12 +184,20 @@ function renderPlaylistsOverview(playlists) {
         const songText = songCount === 1 ? 'song' : 'songs';
         
         card.innerHTML = `
+            <button class="btn-icon delete-playlist-btn-card" data-playlist-id="${playlist.id}" aria-label="Delete playlist" title="Delete playlist">
+                🗑️
+            </button>
             <h3>${escapeHtml(playlist.name)}</h3>
             <div class="song-count">${songCount} ${songText}</div>
         `;
         
         // Click to view playlist (same logic as sidebar playlist items)
-        card.addEventListener('click', () => {
+        card.addEventListener('click', (e) => {
+            // Don't navigate if clicking the delete button
+            if (e.target.classList.contains('delete-playlist-btn-card')) {
+                return;
+            }
+            
             const playlistId = playlist.id;
             const playlistObj = getPlaylistById(playlistId);
             

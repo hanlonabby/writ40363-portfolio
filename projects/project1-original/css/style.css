@@ -230,6 +230,25 @@ section h2::after{
   padding:1rem 1.25rem;
 }
 
+
+/* project link button */
+.project-link {
+  display: inline-block;
+  margin-top: 0.75rem;
+  padding: 0.5rem 1.1rem;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #ffffff;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.project-link:hover {
+  background: var(--accent-hover);
+  color: #ffffff;
+}
+
 /* link */
 a{ color:var(--accent); }
 a:hover{ color:var(--accent-hover); }
