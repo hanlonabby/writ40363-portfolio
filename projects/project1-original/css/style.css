@@ -278,6 +278,13 @@ section h2::after{
 a{ color:var(--accent); }
 a:hover{ color:var(--accent-hover); }
 
+#resume .project-link {
+  margin: 1rem auto;
+  display: inline-block;
+}
+#resume {
+  text-align: center;
+}
 
 .container{ max-width:1000px;margin:0 auto;padding:0 1rem; }
 @media (min-width:768px){ .container{ padding:0 2rem; } }
